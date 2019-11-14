@@ -6,7 +6,7 @@ import {Queries} from "./Queries";
 export const Main = () => (
     <Container fluid>
         <Row>
-            <Col md={3}>
+            <Col md={3} sd={2}>
                 <Explorer/>
             </Col>
             <Col>

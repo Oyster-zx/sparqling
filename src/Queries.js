@@ -51,12 +51,15 @@ var mock = [
     "}"
 ]
 
+var categories = [
+"category 1", "cat"
+];
+
 export const Queries = () => (
     mock.map((query) => {
         return (
             <>
-                <Query code={query}/>
-                <br/>
+                <Query categories={categories} code={query}/>
             </>)
     })
 );

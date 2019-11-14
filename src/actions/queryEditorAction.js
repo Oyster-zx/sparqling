@@ -1,5 +1,5 @@
 /*
- src/actions/simpleAction.js
+ src/actions/queryEditorAction.js
 */
 export const saveQuery = (query) => dispatch => {
     dispatch({
