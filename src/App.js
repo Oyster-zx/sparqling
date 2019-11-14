@@ -1,26 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
+import {connect} from 'react-redux';
 import './App.css';
+import AceEditor from "react-ace";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import "ace-builds/src-noconflict/mode-sparql";
+import "ace-builds/src-noconflict/theme-monokai";
+import "ace-builds/src-min-noconflict/ext-language_tools";
+import {saveQuery} from "./actions/simpleAction";
 
-export default App;
+export const App = (props) => (
+    <AceEditor
+        mode="sparql"
+        theme="monokai"
+        onChange={(newValue) => props.saveQuery(newValue)}
+        value={props.simpleReducer.query}
+        name="UNIQUE_ID_OF_DIV"
+        editorProps={{$blockScrolling: true}}
+        enableBasicAutocompletion={true}
+    />
+);
+const mapStateToProps = state => ({
+    ...state
+});
+
+const mapDispatchToProps = dispatch => ({
+    saveQuery: (query) => dispatch(saveQuery(query))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

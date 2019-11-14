@@ -11,3 +11,26 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.rct-title {
+    font-size: 30px;
+    margin-left: 10px;
+}
+
+.rct-node-icon {
+    font-size: 30px;
+    margin-left: 10px;
+}
+
+.rct-checkbox {
+    font-size: 30px;
+    margin-left: 10px;
+}
+
+.rct-icon-expand-close{
+    font-size: 20px;
+}
+
+.rct-icon-expand-open{
+    font-size: 20px;
+}

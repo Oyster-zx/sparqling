@@ -1,0 +1,14 @@
+[
+  {
+    "@id": "http://example.org/a",
+    "http://www.w3.org/2000/01/rdf-schema#label":"A",
+    "subTerm":[
+      "http://example.org/b"
+    ]
+  },
+  {
+    "@id": "http://example.org/b",
+    "http://www.w3.org/2000/01/rdf-schema#label":"B",
+    "subTerm":[]
+  }
+]
