@@ -15,7 +15,7 @@ export const check = (checked) => dispatch => {
 };
 
 export const fetchCategorization = () => dispatch => {
-    return fetch('http://private-d945c-sparqler.apiary-mock.com/categorization')
+    return fetch('https://private-d945c-sparqler.apiary-mock.com/categorization')
         .then(response => response.json())
         .then(json => dispatch(
             {type: "FETCH_DATA", data: json}))
