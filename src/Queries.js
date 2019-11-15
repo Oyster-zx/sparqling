@@ -1,6 +1,7 @@
 import React from "react";
 import {Query} from "./Query";
 import {Button, Col, Row} from "react-bootstrap";
+import {MDBPageItem, MDBPageNav, MDBPagination} from "mdbreact";
 
 
 var mock = [
@@ -58,16 +59,41 @@ var categories = [
 
 export const Queries = () => (
     <>
-        <Row>
-            <Col md={{ offset: 3 }}>
-                <Button variant="success">Add new query</Button>
-            </Col>
-        </Row>
         {mock.map((query) => {
             return (
                 <>
                     <Query categories={categories} code={query}/>
                 </>)
         })}
+        <Row>
+            <hr/>
+        </Row>
+        <Row>
+            <Col md={{offset: 2}}>
+                <MDBPagination className="mb-5" size="lg">
+                    <MDBPageItem>
+                        <MDBPageNav aria-label="Previous">
+                            <span aria-hidden="true">Previous</span>
+                        </MDBPageNav>
+                    </MDBPageItem>
+                    <MDBPageItem>
+                        <MDBPageNav>
+                            1
+                        </MDBPageNav>
+                    </MDBPageItem>
+                    <MDBPageItem>
+                        <MDBPageNav>2</MDBPageNav>
+                    </MDBPageItem>
+                    <MDBPageItem>
+                        <MDBPageNav>3</MDBPageNav>
+                    </MDBPageItem>
+                    <MDBPageItem>
+                        <MDBPageNav aria-label="Previous">
+                            <span aria-hidden="true">Next</span>
+                        </MDBPageNav>
+                    </MDBPageItem>
+                </MDBPagination>
+            </Col>
+        </Row>
     </>
 );
