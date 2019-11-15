@@ -1,5 +1,6 @@
 import React from "react";
 import {Query} from "./Query";
+import {Button, Col, Row} from "react-bootstrap";
 
 
 var mock = [
@@ -52,14 +53,21 @@ var mock = [
 ]
 
 var categories = [
-"category 1", "cat"
+    "category 1", "cat"
 ];
 
 export const Queries = () => (
-    mock.map((query) => {
-        return (
-            <>
-                <Query categories={categories} code={query}/>
-            </>)
-    })
+    <>
+        <Row>
+            <Col md={{ offset: 3 }}>
+                <Button variant="success">Add new query</Button>
+            </Col>
+        </Row>
+        {mock.map((query) => {
+            return (
+                <>
+                    <Query categories={categories} code={query}/>
+                </>)
+        })}
+    </>
 );
