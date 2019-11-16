@@ -11,10 +11,21 @@ export default (state = {}, action) => {
                 ...state,
                 checked: action.checked
             };
-        case 'FETCH_DATA':
+        case 'FETCH_CATEGORIES':
             return {
                 ...state,
                 categories: action.data
+            };
+        case 'FETCH_CATEGORIZATIONS':
+            return {
+                ...state,
+                categorizations: action.data
+            };
+
+        case 'SET_CATEGORIZATION':
+            return {
+                ...state,
+                selectedCategorizationId: action.categorizationId
             };
         default:
             return state

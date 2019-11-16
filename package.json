@@ -12,6 +12,7 @@
     "mdbreact": "^4.22.1",
     "react": "^16.11.0",
     "react-ace": "^8.0.0",
+    "react-autocomplete": "^1.8.1",
     "react-bootstrap": "^1.0.0-beta.14",
     "react-checkbox-tree": "^1.5.1",
     "react-dom": "^16.11.0",
