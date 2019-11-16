@@ -14,7 +14,7 @@ export default (state = {}, action) => {
         case 'FETCH_DATA':
             return {
                 ...state,
-                nodes: action.data
+                categories: action.data
             };
         default:
             return state
