@@ -1,7 +1,8 @@
 import React from "react";
 import {Query} from "./Query";
-import {Button, Col, Row} from "react-bootstrap";
+import {Col, Row} from "react-bootstrap";
 import {MDBPageItem, MDBPageNav, MDBPagination} from "mdbreact";
+import {connect} from "react-redux";
 
 
 var mock = [
@@ -57,12 +58,14 @@ var categories = [
     "category 1", "cat"
 ];
 
-export const Queries = () => (
+export const Queries = (props) => (
     <>
-        {mock.map((query) => {
+        {props.queryCategorizations && props.queryCategorizations.map((queryCategorization) => {
+            console.log(queryCategorization)
             return (
                 <>
-                    <Query categories={categories} code={query}/>
+                    <Query categories={queryCategorization.categories.map(category => category.name)}
+                           code={queryCategorization.queryDocument.code}/>
                 </>)
         })}
         <Row>
@@ -97,3 +100,11 @@ export const Queries = () => (
         </Row>
     </>
 );
+
+const mapStateToProps = state => ({
+    ...state.queriesReducer
+});
+
+const mapDispatchToProps = dispatch => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Queries);

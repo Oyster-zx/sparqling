@@ -47,7 +47,7 @@ export class CustomHighlightRules extends window.ace.acequire(
             }],
             "#prefix-url": [{
                 token: "punctuation.definition.prefix.sparql",
-                regex: "/<http(.)+>/"
+                regex: "\<http(.)+\>"
             }],
             "#built-in-functions": [{
                 token: "support.function.sparql",

@@ -11,6 +11,9 @@ const initialState = {
         expanded: [],
         checked: [],
         nodes: []
+    },
+    queriesReducer: {
+        queryCategorizations: []
     }
 };
 

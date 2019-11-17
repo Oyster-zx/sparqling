@@ -1,7 +1,7 @@
 import React from "react";
 import Explorer from "./Explorer";
 import {Col, Container, Row} from "react-bootstrap";
-import {Queries} from "./Queries";
+import Queries from "./Queries";
 
 export const Main = () => (
     <Container fluid>

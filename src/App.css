@@ -23,8 +23,6 @@
 
 /* Styles for the input */
 .myCustomTag {
-    border-style: solid;
-    border-width: 1px;
     border-color: #9cd9ff;
     margin-top: 20px;
     margin-bottom: 5px;
@@ -36,8 +34,7 @@
 }
 
 .ace_editor {
-    border-style: solid;
-    border-width: thin;
+
     border-color: #dfdfdf;
     border-radius: 8px;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
