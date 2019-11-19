@@ -1,9 +1,9 @@
 /*
  src/actions/queryEditorAction.js
 */
-export const saveQuery = (query) => dispatch => {
+export const saveQuery = (queryDocument) => dispatch => {
     dispatch({
         type: 'SAVE_QUERY',
-        query: query
+        queryDocument: queryDocument
     })
 };

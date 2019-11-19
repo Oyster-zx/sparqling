@@ -12,6 +12,8 @@ import {QueryResult} from "./QueryResult";
 import {Link, NavLink} from 'react-router-dom'
 import CustomSparqlMode from "./CustomSparqlMode";
 import SparqlAceEditor from "./SparqlAceEditor";
+import {connect} from "react-redux";
+import {Queries} from "./Queries";
 
 
 const customStyles = {
@@ -50,13 +52,10 @@ export const Query = (props) => {
                 <Col>
                     <Card className="queryCard">
                         <Card.Body>
-                            <Card.Title>Card Title</Card.Title>
-                            <Card.Text>
-                                Some quick example text to build on the card title and make up the bulk of
-                                the card's content.
-                            </Card.Text>
+                            <Card.Title>{props.title}</Card.Title>
+                            <Card.Text>{props.description}</Card.Text>
                             <Button variant="success" onClick={() => setShowModal(!showModal)}>Run query</Button>
-                            <NavLink className="btn btn-primary" to="/queryEditor">
+                            <NavLink className="btn btn-primary" to="/queryEditor" onClick={()=>{console.log(":test")}}>
                                 Edit query
                             </NavLink>
                             <Button variant="danger" onClick={() => 0}>Delete query</Button>
@@ -75,3 +74,13 @@ export const Query = (props) => {
             </Row>
         </>)
 };
+
+const mapStateToProps = state => ({
+    ...state.queriesReducer
+});
+
+const mapDispatchToProps = dispatch => ({
+
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Query);

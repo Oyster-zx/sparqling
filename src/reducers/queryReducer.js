@@ -1,9 +1,9 @@
-var mockQuery = "ERROR";
-
-export default (state = {query: mockQuery}, action) => {
+export default (state = {}, action) => {
+    console.log(action)
     switch (action.type) {
-        case 'queryDocument':
+        case 'EDIT_QUERY_DOCUMENT':
             return {
+                ...state,
                 queryDocument: action.queryDocument
             };
         default:

@@ -8,13 +8,28 @@ import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-min-noconflict/ext-language_tools";
 import {saveQuery} from "./actions/queryEditorAction";
 import {Card, Col, Container, FormControl, InputGroup, Row} from "react-bootstrap";
-import Explorer from "./Explorer";
+import ModifiedIntelligentTreeSelect from "./ModifiedIntelligentTreeSelect";
+import {selectCategories} from "./actions/explorerAction";
+import {fetchQueryDocuments} from "./actions/queriesAction";
 
 export const QueryEditor = (props) => (
     <Container fluid>
         <Row>
             <Col md={3} sd={2}>
-                <Explorer/>
+                <ModifiedIntelligentTreeSelect
+                    name={"main_search"}
+                    valueKey={"name"}
+                    labelKey={"name"}
+                    childrenKey={"subTerms"}
+                    simpleTreeData={true}
+                    isMenuOpen={true}
+                    options={props.categories}
+                    onOptionsChange={(categories) => {
+                        props.selectCategories(props.selectedCategorizationId, categories);
+                    }}
+                    // valueArray={this.state.currentCategory}
+                    // createNewOption={this.props.rest.createNewOption}
+                />
             </Col>
             <Col>
                 <Row>
@@ -24,7 +39,7 @@ export const QueryEditor = (props) => (
                     <AceEditor
                         mode="sparql"
                         onChange={(newValue) => props.saveQuery(newValue)}
-                        value={props.simpleReducer.query}
+                        value={"teteas"}
                         name="UNIQUE_ID_OF_DIV"
                         showPrintMargin={false}
                         highlightActiveLine={false}
@@ -63,11 +78,15 @@ export const QueryEditor = (props) => (
     </Container>
 );
 const mapStateToProps = state => ({
-    ...state
+    ...state.explorerReducer
 });
 
 const mapDispatchToProps = dispatch => ({
-    saveQuery: (query) => dispatch(saveQuery(query))
+    saveQuery: (query) => dispatch(saveQuery(query)),
+    selectCategories: (categorizationId, selectedCategories) => {
+        dispatch(selectCategories(selectedCategories));
+        dispatch(fetchQueryDocuments(categorizationId, selectedCategories));
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(QueryEditor);

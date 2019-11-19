@@ -65,7 +65,8 @@ export const Queries = (props) => (
             return (
                 <>
                     <Query categories={queryCategorization.categories.map(category => category.name)}
-                           code={queryCategorization.queryDocument.code}/>
+                           code={queryCategorization.queryDocument.code} title={queryCategorization.queryDocument.title}
+                           description={queryCategorization.queryDocument.description}/>
                 </>)
         })}
         <Row>
