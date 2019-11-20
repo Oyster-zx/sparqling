@@ -21,15 +21,15 @@ export default (state = {}, action) => {
                 ...state,
                 categorizations: action.data
             };
-        case 'SET_CATEGORIZATION':
+        case 'SELECT_CATEGORIZATION':
             return {
                 ...state,
-                selectedCategorizationId: action.categorizationId
+                selectedCategorization: action.selectedCategorization
             };
         case 'SELECT_CATEGORIES':
             return {
                 ...state,
-                selectedCategories: action.selectedCategoies
+                selectedCategories: action.selectedCategories
             };
         default:
             return state

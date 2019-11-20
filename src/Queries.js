@@ -1,5 +1,5 @@
 import React from "react";
-import {Query} from "./Query";
+import Query from "./Query";
 import {Col, Row} from "react-bootstrap";
 import {MDBPageItem, MDBPageNav, MDBPagination} from "mdbreact";
 import {connect} from "react-redux";
@@ -61,12 +61,10 @@ var categories = [
 export const Queries = (props) => (
     <>
         {props.queryCategorizations && props.queryCategorizations.map((queryCategorization) => {
-            console.log(queryCategorization)
             return (
                 <>
-                    <Query categories={queryCategorization.categories.map(category => category.name)}
-                           code={queryCategorization.queryDocument.code} title={queryCategorization.queryDocument.title}
-                           description={queryCategorization.queryDocument.description}/>
+                    <Query queryDocument={queryCategorization.queryDocument}
+                           categories={queryCategorization.categories.map(category => category.name)}/>
                 </>)
         })}
         <Row>

@@ -5,7 +5,7 @@ import {
     fetchCategories,
     fetchCategorizations,
     selectCategories,
-    selectCategorizationId
+    selectCategorization
 } from "./actions/explorerAction";
 import "intelligent-tree-select/lib/styles.css"
 import ModifiedIntelligentTreeSelect from './ModifiedIntelligentTreeSelect'
@@ -27,12 +27,13 @@ export const Explorer = (props) => {
                 id="categorizationSelector"
                 options={props.categorizations}
                 getOptionLabel={option => option.categorizationScheme.title}
-                style={{width: 300}}
+                defaultValue={props.selectedCategorization}
+                style={{width: 450}}
                 renderInput={params => (
                     <TextField {...params} label="Choose categorization" variant="outlined" fullWidth/>
                 )}
-                onChange={(event, categorization) => {
-                    props.selectCategorizationId(categorization ? categorization.id : null)
+                onChange={(event, selectedCategorization) => {
+                    props.selectCategorization(selectedCategorization)
                 }}
             />
             <hr/>
@@ -43,11 +44,14 @@ export const Explorer = (props) => {
                 childrenKey={"subTerms"}
                 simpleTreeData={true}
                 isMenuOpen={true}
+                expanded={true}
                 options={props.categories}
                 onOptionsChange={(categories) => {
-                    props.selectCategories(props.selectedCategorizationId, categories);
+                    if (props.selectedCategorization) {
+                        props.selectCategories(props.selectedCategorization.id, categories);
+                    }
                 }}
-                // valueArray={this.state.currentCategory}
+                valueArray={props.selectedCategories}
                 // createNewOption={this.props.rest.createNewOption}
             />
         </>
@@ -61,7 +65,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     fetchCategories: () => dispatch(fetchCategories()),
     fetchCategorizations: () => dispatch(fetchCategorizations()),
-    selectCategorizationId: (categorizationId) => dispatch(selectCategorizationId(categorizationId)),
+    selectCategorization: (selectedCategorization) => dispatch(selectCategorization(selectedCategorization)),
     selectCategories: (categorizationId, selectedCategories) => {
         dispatch(selectCategories(selectedCategories));
         dispatch(fetchQueryDocuments(categorizationId, selectedCategories));

@@ -31,10 +31,10 @@ export const fetchCategorizations = () => dispatch => {
             {type: "ERROR", msg: "Unable to fetch data", e: err}))
 };
 
-export const selectCategorizationId = (categorizationId) => dispatch => {
+export const selectCategorization = (selectedCategorization) => dispatch => {
     dispatch({
-        type: 'SET_CATEGORIZATION',
-        categorizationId: categorizationId
+        type: 'SELECT_CATEGORIZATION',
+        selectedCategorization: selectedCategorization
     })
 };
 

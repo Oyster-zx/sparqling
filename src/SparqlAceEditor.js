@@ -16,7 +16,7 @@ export default class SparqlAceEditor extends Component {
                     ref="aceEditor"
                     mode="sparql"
                     value={this.props.code}
-                    name="UNIQUE_ID_OF_DIV"
+                    name="queryDocumentEditor"
                     readOnly={true}
                     showPrintMargin={false}
                     highlightActiveLine={false}

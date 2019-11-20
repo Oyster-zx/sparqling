@@ -14,6 +14,9 @@ import CustomSparqlMode from "./CustomSparqlMode";
 import SparqlAceEditor from "./SparqlAceEditor";
 import {connect} from "react-redux";
 import {Queries} from "./Queries";
+import {saveQuery} from "./actions/queryEditorAction";
+import {editQueryDocument} from "./actions/queryAction";
+import {useHistory} from "react-router-dom";
 
 
 const customStyles = {
@@ -30,9 +33,11 @@ const customStyles = {
 };
 Modal.setAppElement('#root');
 
+
 export const Query = (props) => {
 
     const [showModal, setShowModal] = useState(false);
+    const [history, setHistory] = useState(useHistory());
 
     return (
         <>
@@ -47,15 +52,23 @@ export const Query = (props) => {
             </Col>
             <Row>
                 <Col>
-                    <SparqlAceEditor code={props.code}/>
+                    <SparqlAceEditor code={props.queryDocument.code}/>
                 </Col>
                 <Col>
                     <Card className="queryCard">
                         <Card.Body>
-                            <Card.Title>{props.title}</Card.Title>
-                            <Card.Text>{props.description}</Card.Text>
+                            <Card.Title>{props.queryDocument.title}</Card.Title>
+                            <Card.Text>{props.queryDocument.description}</Card.Text>
                             <Button variant="success" onClick={() => setShowModal(!showModal)}>Run query</Button>
-                            <NavLink className="btn btn-primary" to="/queryEditor" onClick={()=>{console.log(":test")}}>
+                            <NavLink className="btn btn-primary"
+                                     to={{
+                                         pathname: '/queryEditor', state: {
+                                             queryDocument: props.queryDocument,
+                                             queryCategories: props.categories
+                                         }
+                                     }}
+                                // onClick={() => props.editQueryDocument(props.queryDocument)}
+                            >
                                 Edit query
                             </NavLink>
                             <Button variant="danger" onClick={() => 0}>Delete query</Button>
@@ -80,7 +93,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-
+    editQueryDocument: (queryDocument) => dispatch(editQueryDocument(queryDocument)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Query);
