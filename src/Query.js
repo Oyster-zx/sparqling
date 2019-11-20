@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from "react";
-import AceEditor from "react-ace";
+import React, {useState} from "react";
 import "ace-builds/src-noconflict/mode-sparql";
 import "ace-builds/src-noconflict/theme-kuroir";
 import "ace-builds/src-noconflict/theme-github";
@@ -9,14 +8,10 @@ import 'react-tagsinput/react-tagsinput.css'
 import {Button, Card, Col, Row} from "react-bootstrap";
 import Modal from 'react-modal';
 import {QueryResult} from "./QueryResult";
-import {Link, NavLink} from 'react-router-dom'
-import CustomSparqlMode from "./CustomSparqlMode";
+import {NavLink} from 'react-router-dom'
 import SparqlAceEditor from "./SparqlAceEditor";
 import {connect} from "react-redux";
-import {Queries} from "./Queries";
-import {saveQuery} from "./actions/queryEditorAction";
 import {editQueryDocument} from "./actions/queryAction";
-import {useHistory} from "react-router-dom";
 
 
 const customStyles = {
@@ -35,9 +30,7 @@ Modal.setAppElement('#root');
 
 
 export const Query = (props) => {
-
     const [showModal, setShowModal] = useState(false);
-    const [history, setHistory] = useState(useHistory());
 
     return (
         <>
@@ -66,9 +59,7 @@ export const Query = (props) => {
                                              queryDocument: props.queryDocument,
                                              queryCategories: props.categories
                                          }
-                                     }}
-                                // onClick={() => props.editQueryDocument(props.queryDocument)}
-                            >
+                                     }}>
                                 Edit query
                             </NavLink>
                             <Button variant="danger" onClick={() => 0}>Delete query</Button>

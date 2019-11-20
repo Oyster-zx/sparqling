@@ -29,7 +29,7 @@ export const QueryEditor = (props) => {
                         expanded={true}
                         options={props.categories}
                         onOptionsChange={(categories) => {
-                            // props.selectCategories(props.selectedCategorizationId, categories);
+                            setQueryCategories(categories);
                         }}
                         valueArray={queryCategories}
                         // createNewOption={this.props.rest.createNewOption}

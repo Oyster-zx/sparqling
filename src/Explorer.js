@@ -28,7 +28,6 @@ export const Explorer = (props) => {
                 options={props.categorizations}
                 getOptionLabel={option => option.categorizationScheme.title}
                 defaultValue={props.selectedCategorization}
-                style={{width: 450}}
                 renderInput={params => (
                     <TextField {...params} label="Choose categorization" variant="outlined" fullWidth/>
                 )}

@@ -2,10 +2,6 @@ import {IntelligentTreeSelect} from 'intelligent-tree-select'
 
 class ModifiedIntelligentTreeSelect extends IntelligentTreeSelect {
 
-    constructor(props) {
-        super(props);
-    }
-
     componentDidMount() {
         super.componentDidMount();
         this._addSelectedOption(this.props.valueArray);
@@ -22,7 +18,6 @@ class ModifiedIntelligentTreeSelect extends IntelligentTreeSelect {
             this.props.onOptionsChange(selectedOption);
         }
     }
-
 }
 
 export default ModifiedIntelligentTreeSelect;

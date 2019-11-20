@@ -2,6 +2,8 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "mdbreact/dist/css/mdb.css";
 import {MDBDataTable} from 'mdbreact';
 import React from "react";
+import {Button, Card, Col, Row} from "react-bootstrap";
+import TextField from "@material-ui/core/TextField";
 
 const data = {
     columns: [
@@ -503,8 +505,24 @@ const data = {
 };
 
 export const QueryResult = (props) => (
-    <MDBDataTable striped
-                  bordered
-                  hover
-                  data={data}/>
+    <Col>
+        <Row>
+            <TextField
+                id="outlined-basic"
+                label="SPARQL endpoint"
+                margin="normal"
+                variant="outlined"
+                defaultValue={"https://query.wikidata.org/"}
+            />
+            <Button variant="success" onClick={() => 0}>Run</Button>
+        </Row>
+        <Row>
+            <Col>
+                <MDBDataTable striped
+                              bordered
+                              hover
+                              data={data}/>
+            </Col>
+        </Row>
+    </Col>
 );
