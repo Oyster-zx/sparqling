@@ -38,7 +38,7 @@ export const Query = (props) => {
                 <Row>
                     {props.categories && props.categories.map(category => {
                         return (
-                            <h6 className="myCustomTag">{category}</h6>
+                            <h6 className="myCustomTag">{category.name}</h6>
                         );
                     })}
                 </Row>

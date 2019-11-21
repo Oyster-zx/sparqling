@@ -37,7 +37,12 @@ export const QueryEditor = (props) => {
                 </Col>
                 <Col>
                     <Row>
-
+                        {queryCategories && queryCategories.map(category => {
+                            console.log(category);
+                            return (
+                                <h6 className="myCustomTag">{category.name}</h6>
+                            );
+                        })}
                     </Row>
                     <Row>
                         <AceEditor
