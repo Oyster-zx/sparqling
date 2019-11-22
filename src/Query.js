@@ -36,7 +36,7 @@ export const Query = (props) => {
         <>
             <Col>
                 <Row>
-                    {props.categories && props.categories.map(category => {
+                    {props.queryCategorization && props.queryCategorization.categories.map(category => {
                         return (
                             <h6 className="myCustomTag">{category.name}</h6>
                         );
@@ -45,19 +45,18 @@ export const Query = (props) => {
             </Col>
             <Row>
                 <Col>
-                    <SparqlAceEditor code={props.queryDocument.code}/>
+                    <SparqlAceEditor code={props.queryCategorization && props.queryCategorization.queryDocument.code}/>
                 </Col>
                 <Col>
                     <Card className="queryCard">
                         <Card.Body>
-                            <Card.Title>{props.queryDocument.title}</Card.Title>
-                            <Card.Text>{props.queryDocument.description}</Card.Text>
+                            <Card.Title>{props.queryCategorization && props.queryCategorization.queryDocument.title}</Card.Title>
+                            <Card.Text>{props.queryCategorization && props.queryCategorization.queryDocument.description}</Card.Text>
                             <Button variant="success" onClick={() => setShowModal(!showModal)}>Run query</Button>
                             <NavLink className="btn btn-primary"
                                      to={{
                                          pathname: '/queryEditor', state: {
-                                             queryDocument: props.queryDocument,
-                                             queryCategories: props.categories
+                                             queryCategorization: props.queryCategorization
                                          }
                                      }}>
                                 Edit query

@@ -9,8 +9,7 @@ export const Queries = (props) => (
         {props.queryCategorizations && props.queryCategorizations.map((queryCategorization) => {
             return (
                 <>
-                    <Query queryDocument={queryCategorization.queryDocument}
-                           categories={queryCategorization.categories}/>
+                    <Query queryCategorization={queryCategorization}/>
                 </>)
         })}
         <Row>

@@ -9,11 +9,14 @@ import "ace-builds/src-min-noconflict/ext-language_tools";
 import {Button, Card, Col, Container, FormControl, InputGroup, Row} from "react-bootstrap";
 import ModifiedIntelligentTreeSelect from "./ModifiedIntelligentTreeSelect";
 import {NavLink} from "react-router-dom";
+import {editQueryDocument} from "./actions/queryAction";
+import {saveQuery} from "./actions/queryEditorAction";
 
 export const QueryEditor = (props) => {
 
-    const [code, setCode] = useState(props.location && props.location.state.queryDocument.code);
-    const [queryCategories, setQueryCategories] = useState(props.location && props.location.state.queryCategories);
+    const [queryCategorization, setQueryCategorization] = useState(props.location && props.location.state.queryCategorization);
+    const [queryDocument, setQueryDocument] = useState(props.location && props.location.state.queryCategorization.queryDocument);
+    const [categories, setCategories] = useState(props.location && props.location.state.queryCategorization.categories);
 
     return (
         <Container fluid>
@@ -29,16 +32,15 @@ export const QueryEditor = (props) => {
                         expanded={true}
                         options={props.categories}
                         onOptionsChange={(categories) => {
-                            setQueryCategories(categories);
+                            setCategories(categories);
                         }}
-                        valueArray={queryCategories}
+                        valueArray={categories}
                         // createNewOption={this.props.rest.createNewOption}
                     />
                 </Col>
                 <Col>
                     <Row>
-                        {queryCategories && queryCategories.map(category => {
-                            console.log(category);
+                        {categories && categories.map(category => {
                             return (
                                 <h6 className="myCustomTag">{category.name}</h6>
                             );
@@ -47,8 +49,11 @@ export const QueryEditor = (props) => {
                     <Row>
                         <AceEditor
                             mode="sparql"
-                            onChange={(newValue) => setCode(newValue)}
-                            value={code}
+                            onChange={(newValue) => setQueryDocument({
+                                ...queryDocument,
+                                code: newValue
+                            })}
+                            value={queryDocument && queryDocument.code}
                             name="queryDocumentEditor"
                             showPrintMargin={false}
                             highlightActiveLine={false}
@@ -71,7 +76,7 @@ export const QueryEditor = (props) => {
                                                 <FormControl
                                                     placeholder="Title"
                                                     aria-label="title"
-                                                    value={props.location && props.location.state.queryDocument.title}
+                                                    value={queryDocument && queryDocument.title}
                                                 />
                                             </Card.Title>
                                             <Card.Text>
@@ -79,7 +84,7 @@ export const QueryEditor = (props) => {
                                                     placeholder="Description"
                                                     aria-label="description"
                                                     as="textarea"
-                                                    value={props.location && props.location.state.queryDocument.description}
+                                                    value={queryDocument && queryDocument.description}
                                                 />
                                             </Card.Text>
                                         </Col>
@@ -90,7 +95,13 @@ export const QueryEditor = (props) => {
                     </Row>
                     <Row>
                         <Col>
-                            <Button variant="success" onClick={() => 0}>Save query</Button>
+                            <Button variant="success" onClick={() => {
+                                props.saveQuery(JSON.stringify({
+                                    id: queryCategorization.id,
+                                    queryDocument: queryDocument,
+                                    categories: categories
+                                }))
+                            }}>Save query</Button>
                             <NavLink className="btn btn-primary" to="/" onClick={() => 0}>
                                 Back to main menu
                             </NavLink>
@@ -107,6 +118,8 @@ const mapStateToProps = state => ({
     ...state.queryReducer
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+    saveQuery: (queryCategorization) => dispatch(saveQuery(queryCategorization))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(QueryEditor);
