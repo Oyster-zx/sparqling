@@ -2,7 +2,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "mdbreact/dist/css/mdb.css";
 import {MDBDataTable} from 'mdbreact';
 import React from "react";
-import {Button, Card, Col, Row} from "react-bootstrap";
+import {Button, Col, Row} from "react-bootstrap";
 import TextField from "@material-ui/core/TextField";
 
 const data = {

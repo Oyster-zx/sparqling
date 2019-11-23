@@ -11,7 +11,7 @@ import {QueryResult} from "./QueryResult";
 import {NavLink} from 'react-router-dom'
 import SparqlAceEditor from "./SparqlAceEditor";
 import {connect} from "react-redux";
-import {editQueryDocument} from "./actions/queryAction";
+import {deleteQueryCategorization} from "./actions/queryAction";
 
 
 const customStyles = {
@@ -61,7 +61,9 @@ export const Query = (props) => {
                                      }}>
                                 Edit query
                             </NavLink>
-                            <Button variant="danger" onClick={() => 0}>Delete query</Button>
+                            <Button variant="danger"
+                                    onClick={() => props.deleteQueryCategorization(props.queryCategorization.id)}>Delete
+                                query</Button>
                         </Card.Body>
                     </Card>
                 </Col>
@@ -83,7 +85,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    editQueryDocument: (queryDocument) => dispatch(editQueryDocument(queryDocument)),
+    deleteQueryCategorization: (queryCategorizationId) => {
+        dispatch(deleteQueryCategorization(queryCategorizationId))
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Query);

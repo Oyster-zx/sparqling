@@ -9,12 +9,11 @@ import "ace-builds/src-min-noconflict/ext-language_tools";
 import {Button, Card, Col, Container, FormControl, InputGroup, Row} from "react-bootstrap";
 import ModifiedIntelligentTreeSelect from "./ModifiedIntelligentTreeSelect";
 import {NavLink} from "react-router-dom";
-import {editQueryDocument} from "./actions/queryAction";
 import {saveQuery} from "./actions/queryEditorAction";
 
 export const QueryEditor = (props) => {
 
-    const [queryCategorization, setQueryCategorization] = useState(props.location && props.location.state.queryCategorization);
+    const [queryCategorization] = useState(props.location && props.location.state.queryCategorization);
     const [queryDocument, setQueryDocument] = useState(props.location && props.location.state.queryCategorization.queryDocument);
     const [categories, setCategories] = useState(props.location && props.location.state.queryCategorization.categories);
 
@@ -77,6 +76,12 @@ export const QueryEditor = (props) => {
                                                     placeholder="Title"
                                                     aria-label="title"
                                                     value={queryDocument && queryDocument.title}
+                                                    onChange={(event) => {
+                                                        setQueryDocument({
+                                                            ...queryDocument,
+                                                            title: event.target.value
+                                                        })
+                                                    }}
                                                 />
                                             </Card.Title>
                                             <Card.Text>
@@ -85,6 +90,10 @@ export const QueryEditor = (props) => {
                                                     aria-label="description"
                                                     as="textarea"
                                                     value={queryDocument && queryDocument.description}
+                                                    onChange={(event) => setQueryDocument({
+                                                        ...queryDocument,
+                                                        description: event.target.value
+                                                    })}
                                                 />
                                             </Card.Text>
                                         </Col>

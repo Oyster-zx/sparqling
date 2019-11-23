@@ -1,12 +1,7 @@
 import React, {useEffect} from "react";
 import "react-checkbox-tree/lib/react-checkbox-tree.css";
 import {connect} from "react-redux";
-import {
-    fetchCategories,
-    fetchCategorizations,
-    selectCategories,
-    selectCategorization
-} from "./actions/explorerAction";
+import {fetchCategories, fetchCategorizations, selectCategories, selectCategorization} from "./actions/explorerAction";
 import "intelligent-tree-select/lib/styles.css"
 import ModifiedIntelligentTreeSelect from './ModifiedIntelligentTreeSelect'
 import {Autocomplete} from '@material-ui/lab';

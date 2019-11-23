@@ -1,5 +1,4 @@
 export const expand = (expanded) => dispatch => {
-    console.log("expand" + expanded)
     dispatch({
         type: 'EXPAND',
         expanded: expanded
@@ -7,7 +6,6 @@ export const expand = (expanded) => dispatch => {
 };
 
 export const check = (checked) => dispatch => {
-    console.log("checked" + checked)
     dispatch({
         type: 'CHECK',
         checked: checked
