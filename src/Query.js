@@ -7,7 +7,7 @@ import "ace-builds/src-min-noconflict/ext-language_tools";
 import 'react-tagsinput/react-tagsinput.css'
 import {Button, Card, Col, Row} from "react-bootstrap";
 import Modal from 'react-modal';
-import {QueryResult} from "./QueryResult";
+import QueryResult from "./QueryResult";
 import {NavLink} from 'react-router-dom'
 import SparqlAceEditor from "./SparqlAceEditor";
 import {connect} from "react-redux";

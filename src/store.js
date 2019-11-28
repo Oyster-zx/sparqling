@@ -14,6 +14,9 @@ const initialState = {
     },
     queriesReducer: {
         queryCategorizations: []
+    },
+    runnerReducer: {
+        endpoint: "https://query.wikidata.org/"
     }
 };
 

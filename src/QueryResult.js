@@ -4,6 +4,8 @@ import {MDBDataTable} from 'mdbreact';
 import React from "react";
 import {Button, Col, Row} from "react-bootstrap";
 import TextField from "@material-ui/core/TextField";
+import {connect} from "react-redux";
+import {setEndpoint} from "./actions/runnerAction";
 
 const data = {
     columns: [
@@ -507,22 +509,27 @@ const data = {
 export const QueryResult = (props) => (
     <Col>
         <Row>
-            <TextField
-                id="outlined-basic"
-                label="SPARQL endpoint"
-                margin="normal"
-                variant="outlined"
-                defaultValue={"https://query.wikidata.org/"}
+            <TextField id="outlined-basic" label="SPARQL endpoint" margin="normal" variant="outlined"
+                       defaultValue={props.endpoint}
+                       onChange={props.setEndpoint}
             />
             <Button variant="success" onClick={() => 0}>Run</Button>
         </Row>
         <Row>
             <Col>
-                <MDBDataTable striped
-                              bordered
-                              hover
-                              data={data}/>
+                <MDBDataTable striped bordered hover data={data}/>
             </Col>
         </Row>
     </Col>
 );
+
+
+const mapStateToProps = state => ({
+    ...state.runnerReducer
+});
+
+const mapDispatchToProps = dispatch => ({
+    setEndpoint: (endpoint) => dispatch(setEndpoint(endpoint))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(QueryResult);
