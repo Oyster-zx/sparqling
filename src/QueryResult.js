@@ -5,7 +5,7 @@ import React from "react";
 import {Button, Col, Row} from "react-bootstrap";
 import TextField from "@material-ui/core/TextField";
 import {connect} from "react-redux";
-import {setEndpoint} from "./actions/runnerAction";
+import {runQuery, setEndpoint} from "./actions/runnerAction";
 
 const data = {
     columns: [
@@ -513,7 +513,10 @@ export const QueryResult = (props) => (
                        defaultValue={props.endpoint}
                        onChange={props.setEndpoint}
             />
-            <Button variant="success" onClick={() => 0}>Run</Button>
+            <Button variant="success" onClick={() => {
+                props.runQuery("http://dbpedia.org/sparql",
+                    "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT * WHERE { ?sub ?pred2 ?obj .} LIMIT 10")
+            }}>Run</Button>
         </Row>
         <Row>
             <Col>
@@ -529,7 +532,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    setEndpoint: (endpoint) => dispatch(setEndpoint(endpoint))
+    setEndpoint: (endpoint) => dispatch(setEndpoint(endpoint)),
+    runQuery: (endpoint, query) => dispatch(runQuery(endpoint, query))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(QueryResult);
