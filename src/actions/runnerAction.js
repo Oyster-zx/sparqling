@@ -14,7 +14,7 @@ export const runQuery = (endpoint, query) => dispatch => {
     })
         .then(response => response.json())
         .then(json => dispatch({
-            type: 'RUN_QUERY',
+            type: 'SET_QUERY_RESULT',
             data: json
         }))
         .catch(err => dispatch(

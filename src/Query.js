@@ -11,7 +11,7 @@ import QueryResult from "./QueryResult";
 import {NavLink} from 'react-router-dom'
 import SparqlAceEditor from "./SparqlAceEditor";
 import {connect} from "react-redux";
-import {deleteQueryCategorization} from "./actions/queryAction";
+import {deleteQueryCategorization, setQueryToRun} from "./actions/queryAction";
 
 
 const customStyles = {
@@ -52,7 +52,10 @@ export const Query = (props) => {
                         <Card.Body>
                             <Card.Title>{props.queryCategorization && props.queryCategorization.queryDocument.title}</Card.Title>
                             <Card.Text>{props.queryCategorization && props.queryCategorization.queryDocument.description}</Card.Text>
-                            <Button variant="success" onClick={() => setShowModal(!showModal)}>Run query</Button>
+                            <Button variant="success" onClick={() => {
+                                props.setQueryToRun(props.queryCategorization.queryDocument.code);
+                                setShowModal(!showModal);
+                            }}>Run query</Button>
                             <NavLink className="btn btn-primary"
                                      to={{
                                          pathname: '/queryEditor', state: {
@@ -71,10 +74,9 @@ export const Query = (props) => {
             <Row>
                 <Modal style={customStyles}
                        isOpen={showModal}
-                       contentLabel="onRequestClose Example"
+                       contentLabel="onRequestClose"
                        onRequestClose={() => setShowModal(!showModal)}>
                     <QueryResult/>
-                    <button onClick={() => setShowModal(!showModal)}>Close</button>
                 </Modal>
             </Row>
         </>)
@@ -85,6 +87,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+    setQueryToRun: (queryCategorization) => dispatch(setQueryToRun(queryCategorization)),
     deleteQueryCategorization: (queryCategorizationId) => {
         dispatch(deleteQueryCategorization(queryCategorizationId))
     }

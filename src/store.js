@@ -16,7 +16,7 @@ const initialState = {
         queryCategorizations: []
     },
     runnerReducer: {
-        endpoint: "https://query.wikidata.org/"
+        endpoint: "https://query.wikidata.org/sparql"
     }
 };
 

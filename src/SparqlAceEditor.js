@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import CustomSparqlMode from "./CustomSparqlMode"
+// import CustomSparqlMode from "./CustomSparqlMode"
 import AceEditor from "react-ace";
 
 export default class SparqlAceEditor extends Component {
 
     componentDidMount() {
-        const customMode = new CustomSparqlMode();
-        this.refs.aceEditor.editor.getSession().setMode(customMode);
+        // const customMode = new CustomSparqlMode();
+        // this.refs.aceEditor.editor.getSession().setMode(customMode);
     }
 
     render() {

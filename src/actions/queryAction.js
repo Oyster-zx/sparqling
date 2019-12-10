@@ -5,6 +5,13 @@ export const editQueryDocument = (queryDocument) => dispatch => {
     })
 };
 
+export const setQueryToRun = (queryToRun) => dispatch => {
+    dispatch({
+        type: 'SET_QUERY_TO_RUN',
+        queryToRun: queryToRun
+    })
+};
+
 export const deleteQueryCategorization = (queryCategorizationId) => dispatch => {
     return fetch(`http://localhost:8080/api/v1/deleteQueryCategorization/${queryCategorizationId}`, {
         method: "DELETE",
