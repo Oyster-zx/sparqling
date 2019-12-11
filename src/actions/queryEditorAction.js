@@ -4,7 +4,7 @@
 export const saveQuery = (queryCategorization) => dispatch => {
     return fetch(`http://localhost:8080/api/v1/saveQueryCategorization`, {
         method: "POST",
-        body: queryCategorization,
+        body: JSON.stringify(queryCategorization),
         headers: {"Content-Type": "application/json", "Accept": "application/json"}
     })
         .then(() => dispatch({

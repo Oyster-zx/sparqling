@@ -1,7 +1,6 @@
 export default (state = {}, action) => {
     switch (action.type) {
         case 'SET_QUERY_TO_RUN':
-            console.log(action)
             if (state.queryToRun === action.queryToRun) {
                 return state;
             } else {
@@ -17,7 +16,6 @@ export default (state = {}, action) => {
                 endpoint: action.endpoint
             };
         case 'SET_QUERY_RESULT':
-            console.log(action.data)
             let headers = action.data.head.vars;
             let rows = action.data.results.bindings;
             let formattedResult = {columns: [], rows: []};
@@ -30,7 +28,6 @@ export default (state = {}, action) => {
                         width: 150
                     }
             }
-            console.log(formattedResult)
             for (let i = 0; i < rows.length; ++i) {
                 let formattedRow = {};
                 for (let head of headers) {
@@ -39,10 +36,14 @@ export default (state = {}, action) => {
                 }
                 formattedResult.rows[i] = formattedRow;
             }
-            console.log(formattedResult);
             return {
                 ...state,
                 queryResult: formattedResult
+            };
+        case 'DELETE_QUERY_RESULT':
+            return {
+                ...state,
+                queryResult: undefined
             };
         default:
             return state

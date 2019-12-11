@@ -5,6 +5,12 @@ export const setEndpoint = (endpoint) => dispatch => {
     })
 };
 
+export const deleteQueryResult = () => dispatch => {
+    dispatch({
+        type: 'DELETE_QUERY_RESULT'
+    })
+};
+
 export const runQuery = (endpoint, query) => dispatch => {
     console.log(`Sending ${query} to ${endpoint}`);
     return fetch(endpoint, {

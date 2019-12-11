@@ -13,9 +13,9 @@ import {saveQuery} from "./actions/queryEditorAction";
 
 export const QueryEditor = (props) => {
 
-    const [queryCategorization] = useState(props.location && props.location.state.queryCategorization);
-    const [queryDocument, setQueryDocument] = useState(props.location && props.location.state.queryCategorization.queryDocument);
-    const [categories, setCategories] = useState(props.location && props.location.state.queryCategorization.categories);
+    const [queryCategorization] = useState(props.queryCategorizationToEdit);
+    const [queryDocument, setQueryDocument] = useState(props.queryCategorizationToEdit.queryDocument);
+    const [categories, setCategories] = useState(props.queryCategorizationToEdit.categories);
 
     return (
         <Container fluid>
@@ -105,15 +105,16 @@ export const QueryEditor = (props) => {
                     <Row>
                         <Col>
                             <Button variant="success" onClick={() => {
-                                props.saveQuery(JSON.stringify({
-                                    id: queryCategorization.id,
-                                    queryDocument: queryDocument,
-                                    categories: categories
-                                }))
+                                props.saveQuery(
+                                    {
+                                        id: queryCategorization.id,
+                                        queryDocument: queryDocument,
+                                        categories: categories
+                                    })
                             }}>Save query</Button>
-                            <NavLink className="btn btn-primary" to="/" onClick={() => 0}>
-                                Back to main menu
-                            </NavLink>
+                            <Button variant="danger" onClick={() => props.close()}>
+                                Close
+                            </Button>
                         </Col>
                     </Row>
                 </Col>
@@ -124,7 +125,8 @@ export const QueryEditor = (props) => {
 
 const mapStateToProps = state => ({
     ...state.explorerReducer,
-    ...state.queryReducer
+    ...state.queryReducer,
+    ...state.queryEditorReducer
 });
 
 const mapDispatchToProps = dispatch => ({

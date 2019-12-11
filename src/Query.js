@@ -8,10 +8,10 @@ import 'react-tagsinput/react-tagsinput.css'
 import {Button, Card, Col, Row} from "react-bootstrap";
 import Modal from 'react-modal';
 import QueryResult from "./QueryResult";
-import {NavLink} from 'react-router-dom'
 import SparqlAceEditor from "./SparqlAceEditor";
 import {connect} from "react-redux";
-import {deleteQueryCategorization, setQueryToRun} from "./actions/queryAction";
+import {deleteQueryCategorization, setQueryCategorizationToEdit, setQueryToRun} from "./actions/queryAction";
+import QueryEditor from "./QueryEditor";
 
 
 const customStyles = {
@@ -30,7 +30,8 @@ Modal.setAppElement('#root');
 
 
 export const Query = (props) => {
-    const [showModal, setShowModal] = useState(false);
+    const [showQueryRunner, setQueryRunner] = useState(false);
+    const [showQueryEditor, setQueryEditor] = useState(false);
 
     return (
         <>
@@ -54,16 +55,20 @@ export const Query = (props) => {
                             <Card.Text>{props.queryCategorization && props.queryCategorization.queryDocument.description}</Card.Text>
                             <Button variant="success" onClick={() => {
                                 props.setQueryToRun(props.queryCategorization.queryDocument.code);
-                                setShowModal(!showModal);
+                                setQueryRunner(!showQueryRunner);
                             }}>Run query</Button>
-                            <NavLink className="btn btn-primary"
-                                     to={{
-                                         pathname: '/queryEditor', state: {
-                                             queryCategorization: props.queryCategorization
-                                         }
-                                     }}>
-                                Edit query
-                            </NavLink>
+                            <Button variant="warning" onClick={() => {
+                                props.setQueryCategorizationToEdit(props.queryCategorization);
+                                setQueryEditor(!showQueryEditor);
+                            }}>Edit query</Button>
+                            {/*<NavLink className="btn btn-primary"*/}
+                            {/*         to={{*/}
+                            {/*             pathname: '/queryEditor', state: {*/}
+                            {/*                 queryCategorization: props.queryCategorization*/}
+                            {/*             }*/}
+                            {/*         }}>*/}
+                            {/*    Edit query*/}
+                            {/*</NavLink>*/}
                             <Button variant="danger"
                                     onClick={() => props.deleteQueryCategorization(props.queryCategorization.id)}>Delete
                                 query</Button>
@@ -73,10 +78,16 @@ export const Query = (props) => {
             </Row>
             <Row>
                 <Modal style={customStyles}
-                       isOpen={showModal}
-                       contentLabel="onRequestClose"
-                       onRequestClose={() => setShowModal(!showModal)}>
-                    <QueryResult/>
+                       isOpen={showQueryRunner}
+                       contentLabel="queryRunner"
+                       onRequestClose={() => setQueryRunner(!showQueryRunner)}>
+                    <QueryResult close={() => setQueryRunner(false)}/>
+                </Modal>
+                <Modal style={customStyles}
+                       isOpen={showQueryEditor}
+                       contentLabel="queryEditor"
+                       onRequestClose={() => setQueryEditor(!showQueryEditor)}>
+                    <QueryEditor close={() => setQueryEditor(false)}/>
                 </Modal>
             </Row>
         </>)
@@ -87,7 +98,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    setQueryToRun: (queryCategorization) => dispatch(setQueryToRun(queryCategorization)),
+    setQueryToRun: (query) => dispatch(setQueryToRun(query)),
+    setQueryCategorizationToEdit: (queryCategorization) => dispatch(setQueryCategorizationToEdit(queryCategorization)),
     deleteQueryCategorization: (queryCategorizationId) => {
         dispatch(deleteQueryCategorization(queryCategorizationId))
     }

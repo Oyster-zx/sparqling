@@ -12,6 +12,13 @@ export const setQueryToRun = (queryToRun) => dispatch => {
     })
 };
 
+export const setQueryCategorizationToEdit = (queryCategorizationToEdit) => dispatch => {
+    dispatch({
+        type: 'SET_QUERY_CATEGORIZATION_TO_EDIT',
+        queryCategorizationToEdit: queryCategorizationToEdit
+    })
+};
+
 export const deleteQueryCategorization = (queryCategorizationId) => dispatch => {
     return fetch(`http://localhost:8080/api/v1/deleteQueryCategorization/${queryCategorizationId}`, {
         method: "DELETE",

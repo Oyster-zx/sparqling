@@ -1,10 +1,9 @@
-var mockQuery = "ERROR";
-
-export default (state = {query: mockQuery}, action) => {
+export default (state = {}, action) => {
     switch (action.type) {
-        case 'queryDocument':
+        case 'SET_QUERY_CATEGORIZATION_TO_EDIT':
             return {
-                queryDocument: action.queryDocument
+                ...state,
+                queryCategorizationToEdit: action.queryCategorizationToEdit
             };
         default:
             return state
