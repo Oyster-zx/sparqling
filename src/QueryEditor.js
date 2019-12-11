@@ -8,8 +8,8 @@ import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-min-noconflict/ext-language_tools";
 import {Button, Card, Col, Container, FormControl, InputGroup, Row} from "react-bootstrap";
 import ModifiedIntelligentTreeSelect from "./ModifiedIntelligentTreeSelect";
-import {NavLink} from "react-router-dom";
 import {saveQuery} from "./actions/queryEditorAction";
+import SparqlAceEditor from "./SparqlAceEditor";
 
 export const QueryEditor = (props) => {
 

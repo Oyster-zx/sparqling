@@ -33,13 +33,15 @@ export const Query = (props) => {
     const [showQueryRunner, setQueryRunner] = useState(false);
     const [showQueryEditor, setQueryEditor] = useState(false);
 
+    let key = 0;
+
     return (
         <>
             <Col>
                 <Row>
                     {props.queryCategorization && props.queryCategorization.categories.map(category => {
                         return (
-                            <h6 className="myCustomTag">{category.name}</h6>
+                            <h6 key={key++} className="myCustomTag">{category.name}</h6>
                         );
                     })}
                 </Row>
@@ -61,14 +63,6 @@ export const Query = (props) => {
                                 props.setQueryCategorizationToEdit(props.queryCategorization);
                                 setQueryEditor(!showQueryEditor);
                             }}>Edit query</Button>
-                            {/*<NavLink className="btn btn-primary"*/}
-                            {/*         to={{*/}
-                            {/*             pathname: '/queryEditor', state: {*/}
-                            {/*                 queryCategorization: props.queryCategorization*/}
-                            {/*             }*/}
-                            {/*         }}>*/}
-                            {/*    Edit query*/}
-                            {/*</NavLink>*/}
                             <Button variant="danger"
                                     onClick={() => props.deleteQueryCategorization(props.queryCategorization.id)}>Delete
                                 query</Button>

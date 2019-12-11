@@ -11,21 +11,19 @@ export default class SparqlAceEditor extends Component {
 
     render() {
         return (
-            <div>
-                <AceEditor
-                    ref="aceEditor"
-                    mode="sparql"
-                    value={this.props.code}
-                    name="queryDocumentEditor"
-                    readOnly={true}
-                    showPrintMargin={false}
-                    highlightActiveLine={false}
-                    width={800}
-                    maxLines={Infinity}
-                    fontSize={16}
-                    enableBasicAutocompletion={true}
-                />
-            </div>
+            <AceEditor
+                ref="aceEditor"
+                mode="sparql"
+                value={this.props.code}
+                name="queryDocumentEditor"
+                readOnly={true}
+                showPrintMargin={false}
+                highlightActiveLine={false}
+                width={'800'}
+                maxLines={Infinity}
+                fontSize={16}
+                enableBasicAutocompletion={true}
+            />
         );
     }
 }
