@@ -8,14 +8,13 @@ import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-min-noconflict/ext-language_tools";
 import {Button, Card, Col, Container, FormControl, InputGroup, Row} from "react-bootstrap";
 import ModifiedIntelligentTreeSelect from "./ModifiedIntelligentTreeSelect";
-import {saveQuery} from "./actions/queryEditorAction";
-import SparqlAceEditor from "./SparqlAceEditor";
+import {createQueryCategorization, saveQueryCategorization} from "./actions/queryEditorAction";
 
 export const QueryEditor = (props) => {
 
     const [queryCategorization] = useState(props.queryCategorizationToEdit);
-    const [queryDocument, setQueryDocument] = useState(props.queryCategorizationToEdit.queryDocument);
-    const [categories, setCategories] = useState(props.queryCategorizationToEdit.categories);
+    const [queryDocument, setQueryDocument] = useState(props.queryCategorizationToEdit && props.queryCategorizationToEdit.queryDocument);
+    const [categories, setCategories] = useState(props.queryCategorizationToEdit && props.queryCategorizationToEdit.categories);
 
     return (
         <Container fluid>
@@ -105,12 +104,21 @@ export const QueryEditor = (props) => {
                     <Row>
                         <Col>
                             <Button variant="success" onClick={() => {
-                                props.saveQuery(
-                                    {
-                                        id: queryCategorization.id,
-                                        queryDocument: queryDocument,
-                                        categories: categories
-                                    })
+                                console.log(props)
+                                if (queryCategorization && queryCategorization.id) {
+                                    props.update(
+                                        {
+                                            id: queryCategorization.id,
+                                            queryDocument: queryDocument,
+                                            categories: categories
+                                        })
+                                } else {
+                                    props.create(
+                                        {
+                                            queryDocument: queryDocument,
+                                            categories: categories
+                                        })
+                                }
                             }}>Save query</Button>
                             <Button variant="danger" onClick={() => props.close()}>
                                 Close
@@ -130,7 +138,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    saveQuery: (queryCategorization) => dispatch(saveQuery(queryCategorization))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(QueryEditor);

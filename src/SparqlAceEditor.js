@@ -12,7 +12,7 @@ export default class SparqlAceEditor extends Component {
     render() {
         return (
             <AceEditor
-                ref="aceEditor"
+                ref="aceQueryEditor"
                 mode="sparql"
                 value={this.props.code}
                 name="queryDocumentEditor"

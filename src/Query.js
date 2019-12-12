@@ -12,19 +12,11 @@ import SparqlAceEditor from "./SparqlAceEditor";
 import {connect} from "react-redux";
 import {deleteQueryCategorization, setQueryCategorizationToEdit, setQueryToRun} from "./actions/queryAction";
 import QueryEditor from "./QueryEditor";
+import {saveQueryCategorization} from "./actions/queryEditorAction";
 
 
 const customStyles = {
-    // content: {
-    //     top: '50%',
-    //     left: '50%',
-    //     right: 'auto',
-    //     bottom: 'auto',
-    //     marginRight: '-50%',
-    //     transform: 'translate(-50%, -50%)'
-    // },
     overlay: {zIndex: 1000}
-
 };
 Modal.setAppElement('#root');
 
@@ -81,7 +73,7 @@ export const Query = (props) => {
                        isOpen={showQueryEditor}
                        contentLabel="queryEditor"
                        onRequestClose={() => setQueryEditor(!showQueryEditor)}>
-                    <QueryEditor close={() => setQueryEditor(false)}/>
+                    <QueryEditor close={() => setQueryEditor(false)} update={props.saveQueryCategorization}/>
                 </Modal>
             </Row>
         </>)
@@ -96,7 +88,8 @@ const mapDispatchToProps = dispatch => ({
     setQueryCategorizationToEdit: (queryCategorization) => dispatch(setQueryCategorizationToEdit(queryCategorization)),
     deleteQueryCategorization: (queryCategorizationId) => {
         dispatch(deleteQueryCategorization(queryCategorizationId))
-    }
+    },
+    saveQueryCategorization: (queryCategorization) => dispatch(saveQueryCategorization(queryCategorization)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Query);
