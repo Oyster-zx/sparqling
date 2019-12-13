@@ -64,13 +64,16 @@ export const Queries = (props) => {
                        isOpen={showQueryCreator}
                        contentLabel="queryRunner"
                        onRequestClose={() => setShowQueryCreator(!showQueryCreator)}>
-                    <QueryEditor close={() => setShowQueryCreator(false)} create={props.createQueryCategorization}/>
+                    <QueryEditor close={() => setShowQueryCreator(false)}
+                                 create={props.createQueryCategorization}
+                                 categorization={props.selectedCategorization}/>
                 </Modal>
             </Row>
         </>)
 }
 
 const mapStateToProps = state => ({
+    ...state.explorerReducer,
     ...state.queriesReducer
 });
 

@@ -31,11 +31,14 @@ export const Query = (props) => {
         <>
             <Col>
                 <Row>
-                    {props.queryCategorization && props.queryCategorization.categories.map(category => {
+                    {props.queryCategorization && props.queryCategorization.categories.length !== 0
+                    && props.queryCategorization.categories.map(category => {
                         return (
-                            <h6 key={key++} className="myCustomTag">{category.name}</h6>
+                            <h6 key={key++} className="categoryTag">{category.name}</h6>
                         );
                     })}
+                    {props.queryCategorization && props.queryCategorization.categories.length === 0
+                    && <h6 key={key++} className="uncategorizedTag">Uncategorized</h6>}
                 </Row>
             </Col>
             <Row>

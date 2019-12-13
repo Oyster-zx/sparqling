@@ -8,7 +8,6 @@ import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-min-noconflict/ext-language_tools";
 import {Button, Card, Col, Container, FormControl, InputGroup, Row} from "react-bootstrap";
 import ModifiedIntelligentTreeSelect from "./ModifiedIntelligentTreeSelect";
-import {createQueryCategorization, saveQueryCategorization} from "./actions/queryEditorAction";
 
 export const QueryEditor = (props) => {
 
@@ -40,7 +39,7 @@ export const QueryEditor = (props) => {
                     <Row>
                         {categories && categories.map(category => {
                             return (
-                                <h6 className="myCustomTag">{category.name}</h6>
+                                <h6 className="categoryTag">{category.name}</h6>
                             );
                         })}
                     </Row>
@@ -115,6 +114,7 @@ export const QueryEditor = (props) => {
                                 } else {
                                     props.create(
                                         {
+                                            categorizationId: props.categorization.id,
                                             queryDocument: queryDocument,
                                             categories: categories
                                         })
