@@ -7,10 +7,10 @@ class ModifiedIntelligentTreeSelect extends IntelligentTreeSelect {
         this._addSelectedOption(this.props.valueArray);
     }
 
-    _onOptionCreate(createdOption) {
-        this.props.createNewOption("categorization", createdOption);
-        super._onOptionCreate(createdOption);
-    }
+    // _onOptionCreate(createdOption) {
+    //     this.props.createNewOption("categorization", createdOption);
+    //     super._onOptionCreate(createdOption);
+    // }
 
     _addSelectedOption(selectedOption) {
         super._addSelectedOption(selectedOption);

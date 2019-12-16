@@ -30,26 +30,26 @@ export const Explorer = (props) => {
                     props.selectCategorization(selectedCategorization)
                 }}
             />
-            <hr/>
-            <ModifiedIntelligentTreeSelect
-                name={"main_search"}
-                valueKey={"name"}
-                labelKey={"name"}
-                childrenKey={"subTerms"}
-                simpleTreeData={true}
-                isMenuOpen={true}
-                expanded={true}
-                options={props.categories}
-                onOptionsChange={(categories) => {
-                    if (props.selectedCategorization) {
+            {props.selectedCategorization &&
+            <>
+                <hr/>
+                <ModifiedIntelligentTreeSelect
+                    name={"main_search"}
+                    valueKey={"name"}
+                    labelKey={"name"}
+                    childrenKey={"subTerms"}
+                    simpleTreeData={true}
+                    isMenuOpen={true}
+                    expanded={true}
+                    options={props.categories}
+                    onOptionsChange={(categories) => {
                         props.selectCategories(props.selectedCategorization.id, categories);
-                    }
-                }}
-                valueArray={props.selectedCategories}
-                // createNewOption={this.props.rest.createNewOption}
-            />
-        </>
-    )
+                    }}
+                    valueArray={props.selectedCategories}
+                    onOptionCreate={(newOption)=>console.log(newOption)}
+                />
+            </>}
+        </>)
 };
 
 const mapStateToProps = state => ({
