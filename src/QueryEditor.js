@@ -27,12 +27,12 @@ export const QueryEditor = (props) => {
                         simpleTreeData={true}
                         isMenuOpen={true}
                         expanded={true}
+                        showSettings={false}
                         options={props.categories}
                         onOptionsChange={(categories) => {
                             setCategories(categories);
                         }}
                         valueArray={categories}
-                        // createNewOption={this.props.rest.createNewOption}
                     />
                 </Col>
                 <Col>
@@ -103,7 +103,6 @@ export const QueryEditor = (props) => {
                     <Row>
                         <Col>
                             <Button variant="success" onClick={() => {
-                                console.log(props)
                                 if (queryCategorization && queryCategorization.id) {
                                     props.update(
                                         {
@@ -114,11 +113,12 @@ export const QueryEditor = (props) => {
                                 } else {
                                     props.create(
                                         {
-                                            categorizationId: props.categorization.id,
+                                            categorizationId: props.selectedCategorization.id,
                                             queryDocument: queryDocument,
                                             categories: categories
                                         })
                                 }
+                                props.close()
                             }}>Save query</Button>
                             <Button variant="danger" onClick={() => props.close()}>
                                 Close
@@ -133,8 +133,7 @@ export const QueryEditor = (props) => {
 
 const mapStateToProps = state => ({
     ...state.explorerReducer,
-    ...state.queryReducer,
-    ...state.queryEditorReducer
+    ...state.queryReducer
 });
 
 const mapDispatchToProps = dispatch => ({

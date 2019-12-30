@@ -10,9 +10,10 @@ import Modal from 'react-modal';
 import QueryResult from "./QueryResult";
 import SparqlAceEditor from "./SparqlAceEditor";
 import {connect} from "react-redux";
-import {deleteQueryCategorization, setQueryCategorizationToEdit, setQueryToRun} from "./actions/queryAction";
+import {deleteQueryCategorization, setQueryToRun} from "./actions/queryAction";
 import QueryEditor from "./QueryEditor";
-import {saveQueryCategorization} from "./actions/queryEditorAction";
+import {updateQueryCategorization} from "./actions/queryEditorAction";
+import {fetchQueryDocuments} from "./actions/queriesAction";
 
 
 const customStyles = {
@@ -24,6 +25,7 @@ Modal.setAppElement('#root');
 export const Query = (props) => {
     const [showQueryRunner, setQueryRunner] = useState(false);
     const [showQueryEditor, setQueryEditor] = useState(false);
+    const [queryCategorizationToEdit, setQueryCategorizationToEdit] = useState({});
 
     let key = 0;
 
@@ -55,7 +57,7 @@ export const Query = (props) => {
                                 setQueryRunner(!showQueryRunner);
                             }}>Run query</Button>
                             <Button variant="warning" onClick={() => {
-                                props.setQueryCategorizationToEdit(props.queryCategorization);
+                                setQueryCategorizationToEdit(props.queryCategorization);
                                 setQueryEditor(!showQueryEditor);
                             }}>Edit query</Button>
                             <Button variant="danger"
@@ -76,23 +78,29 @@ export const Query = (props) => {
                        isOpen={showQueryEditor}
                        contentLabel="queryEditor"
                        onRequestClose={() => setQueryEditor(!showQueryEditor)}>
-                    <QueryEditor close={() => setQueryEditor(false)} update={props.saveQueryCategorization}/>
+                    <QueryEditor queryCategorizationToEdit={queryCategorizationToEdit}
+                                 close={() => {
+                                     setQueryEditor(false);
+                                     props.fetchQueryDocuments(props.selectedCategorization.id, props.selectedCategories);
+                                 }}
+                                 update={props.updateQueryCategorization}/>
                 </Modal>
             </Row>
         </>)
 };
 
 const mapStateToProps = state => ({
+    ...state.explorerReducer,
     ...state.queriesReducer
 });
 
 const mapDispatchToProps = dispatch => ({
     setQueryToRun: (query) => dispatch(setQueryToRun(query)),
-    setQueryCategorizationToEdit: (queryCategorization) => dispatch(setQueryCategorizationToEdit(queryCategorization)),
     deleteQueryCategorization: (queryCategorizationId) => {
         dispatch(deleteQueryCategorization(queryCategorizationId))
     },
-    saveQueryCategorization: (queryCategorization) => dispatch(saveQueryCategorization(queryCategorization)),
+    updateQueryCategorization: (queryCategorization) => dispatch(updateQueryCategorization(queryCategorization)),
+    fetchQueryDocuments: (categorizationId, selectedCategories) => dispatch(fetchQueryDocuments(categorizationId, selectedCategories))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Query);

@@ -1,4 +1,4 @@
-export const saveQueryCategorization = (queryCategorization) => dispatch => {
+export const updateQueryCategorization = (queryCategorization) => dispatch => {
     return fetch(`http://localhost:8080/api/v1/updateQueryCategorization`, {
         method: "POST",
         body: JSON.stringify(queryCategorization),

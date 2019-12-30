@@ -1,17 +1,24 @@
 import React, {useEffect} from "react";
 import "react-checkbox-tree/lib/react-checkbox-tree.css";
 import {connect} from "react-redux";
-import {fetchCategories, fetchCategorizations, selectCategories, selectCategorization} from "./actions/explorerAction";
+import {
+    cleanStore,
+    fetchCategories,
+    fetchCategorizations,
+    selectCategories,
+    selectCategorization
+} from "./actions/explorerAction";
 import "intelligent-tree-select/lib/styles.css"
 import ModifiedIntelligentTreeSelect from './ModifiedIntelligentTreeSelect'
 import {Autocomplete} from '@material-ui/lab';
 import {TextField} from "@material-ui/core";
 import {fetchQueryDocuments} from "./actions/queriesAction";
+import AceEditor from "react-ace";
 
 export const Explorer = (props) => {
 
     useEffect(() => {
-        props.fetchCategories();
+        // props.fetchCategories();
         props.fetchCategorizations();
     }, []);
 
@@ -27,7 +34,13 @@ export const Explorer = (props) => {
                     <TextField {...params} label="Choose categorization" variant="outlined" fullWidth/>
                 )}
                 onChange={(event, selectedCategorization) => {
-                    props.selectCategorization(selectedCategorization)
+                    props.selectCategorization(selectedCategorization);
+                    if (selectedCategorization) {
+                        props.fetchCategories(selectedCategorization.categorizationScheme.id);
+                    } else {
+                        props.cleanStore();
+                        props.fetchCategorizations();
+                    }
                 }}
             />
             {props.selectedCategorization &&
@@ -41,12 +54,13 @@ export const Explorer = (props) => {
                     simpleTreeData={true}
                     isMenuOpen={true}
                     expanded={true}
+                    showSettings={false}
                     options={props.categories}
                     onOptionsChange={(categories) => {
                         props.selectCategories(props.selectedCategorization.id, categories);
                     }}
                     valueArray={props.selectedCategories}
-                    onOptionCreate={(newOption)=>console.log(newOption)}
+                    onOptionCreate={(newOption) => console.log(newOption)}
                 />
             </>}
         </>)
@@ -57,7 +71,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    fetchCategories: () => dispatch(fetchCategories()),
+    cleanStore: () => dispatch(cleanStore()),
+    fetchCategories: (categorizationSchemaId) => dispatch(fetchCategories(categorizationSchemaId)),
     fetchCategorizations: () => dispatch(fetchCategorizations()),
     selectCategorization: (selectedCategorization) => dispatch(selectCategorization(selectedCategorization)),
     selectCategories: (categorizationId, selectedCategories) => {

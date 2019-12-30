@@ -12,8 +12,9 @@ export const check = (checked) => dispatch => {
     })
 };
 
-export const fetchCategories = () => dispatch => {
-    return fetch('http://localhost:8080/api/v1/categories')
+export const fetchCategories = (categorizationSchemaId) => dispatch => {
+    console.log(`GET http://localhost:8080/api/v1/categories?categorizationSchemaId=${categorizationSchemaId}`)
+    return fetch(`http://localhost:8080/api/v1/categories?categorizationSchemaId=${categorizationSchemaId}`)
         .then(response => response.json())
         .then(json => dispatch(
             {type: "FETCH_CATEGORIES", data: json}))
@@ -40,5 +41,11 @@ export const selectCategories = (selectedCategories) => dispatch => {
     dispatch({
         type: 'SELECT_CATEGORIES',
         selectedCategories: selectedCategories
+    })
+};
+
+export const cleanStore = () => dispatch => {
+    dispatch({
+        type: 'CLEAN_STORE'
     })
 };
