@@ -1,6 +1,8 @@
+import Constants from "../Constants";
+
 export const fetchQueryDocuments = (categorizationId, categories) => dispatch => {
     if (categorizationId && categories) {
-        return fetch(`http://localhost:8080/api/v1/queryDocuments?categorizationId=${categorizationId}&categoriesIds=${categories.map(category => category.id)}`)
+        return fetch(`${Constants.REST_API}/queryCategorizations?categorizationId=${categorizationId}&categoriesIds=${categories.map(category => category.id)}`)
             .then(response => response.json())
             .then(json => dispatch(
                 {type: "FETCH_QUERY_CATEGORIZATIONS", data: json}))

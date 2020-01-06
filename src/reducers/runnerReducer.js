@@ -40,10 +40,18 @@ export default (state = {}, action) => {
                 ...state,
                 queryResult: formattedResult
             };
+        case 'SET_QUERY_FAIL':
+            console.log(typeof (action.error))
+            console.log(action.error)
+            return {
+                ...state,
+                queryFail: action.error
+            };
         case 'DELETE_QUERY_RESULT':
             return {
                 ...state,
-                queryResult: undefined
+                queryResult: null,
+                queryFail: null
             };
         default:
             return state

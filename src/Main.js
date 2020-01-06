@@ -1,7 +1,7 @@
 import React from "react";
 import Explorer from "./Explorer";
 import {Col, Container, Row} from "react-bootstrap";
-import Queries from "./Queries";
+import QueryList from "./QueryList";
 
 export const Main = () => (
     <Container fluid>
@@ -10,7 +10,7 @@ export const Main = () => (
                 <Explorer/>
             </Col>
             <Col>
-                <Queries/>
+                <QueryList/>
             </Col>
         </Row>
     </Container>

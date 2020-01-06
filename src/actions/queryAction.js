@@ -1,9 +1,4 @@
-export const editQueryDocument = (queryDocument) => dispatch => {
-    dispatch({
-        type: 'EDIT_QUERY_DOCUMENT',
-        queryDocument: queryDocument
-    })
-};
+import Constants from "../Constants";
 
 export const setQueryToRun = (queryToRun) => dispatch => {
     dispatch({
@@ -12,15 +7,8 @@ export const setQueryToRun = (queryToRun) => dispatch => {
     })
 };
 
-export const setQueryCategorizationToEdit = (queryCategorizationToEdit) => dispatch => {
-    dispatch({
-        type: 'SET_QUERY_CATEGORIZATION_TO_EDIT',
-        queryCategorizationToEdit: queryCategorizationToEdit
-    })
-};
-
 export const deleteQueryCategorization = (queryCategorizationId) => dispatch => {
-    return fetch(`http://localhost:8080/api/v1/deleteQueryCategorization/${queryCategorizationId}`, {
+    return fetch(`${Constants.REST_API}/queryCategorization?queryCategorizationId=${queryCategorizationId}`, {
         method: "DELETE",
         headers: {"Content-Type": "application/json", "Accept": "application/json"}
     })

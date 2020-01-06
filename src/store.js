@@ -7,12 +7,7 @@ import thunk from 'redux-thunk';
 import rootReducer from './reducers/rootReducer';
 
 const initialState = {
-    explorerReducer: {
-        expanded: [],
-        checked: [],
-        nodes: []
-    },
-    queriesReducer: {
+    queryListReducer: {
         queryCategorizations: []
     },
     runnerReducer: {

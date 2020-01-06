@@ -1,15 +1,11 @@
 import {combineReducers} from 'redux';
-import queryEditorReducer from './queryEditorReducer';
 import explorerReducer from "./explorerReducer";
-import queriesReducer from "./queriesReducer";
-import queryReducer from "./queryReducer";
+import queryListReducer from "./queryListReducer";
 import runnerReducer from "./runnerReducer";
 
 const appReducer = combineReducers({
     explorerReducer,
-    queriesReducer,
-    queryReducer,
-    queryEditorReducer,
+    queryListReducer,
     runnerReducer
 });
 

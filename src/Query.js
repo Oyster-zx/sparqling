@@ -13,7 +13,7 @@ import {connect} from "react-redux";
 import {deleteQueryCategorization, setQueryToRun} from "./actions/queryAction";
 import QueryEditor from "./QueryEditor";
 import {updateQueryCategorization} from "./actions/queryEditorAction";
-import {fetchQueryDocuments} from "./actions/queriesAction";
+import {fetchQueryDocuments} from "./actions/queryListAction";
 
 
 const customStyles = {
@@ -25,7 +25,7 @@ Modal.setAppElement('#root');
 export const Query = (props) => {
     const [showQueryRunner, setQueryRunner] = useState(false);
     const [showQueryEditor, setQueryEditor] = useState(false);
-    const [queryCategorizationToEdit, setQueryCategorizationToEdit] = useState({});
+    const [queryCategorizationToEdit, setQueryCategorizationToEdit] = useState({code: ""});
 
     let key = 0;
 
@@ -33,25 +33,34 @@ export const Query = (props) => {
         <>
             <Col>
                 <Row>
-                    {props.queryCategorization && props.queryCategorization.categories.length !== 0
+                    {props.queryCategorization && props.queryCategorization.categories
+                    && props.queryCategorization.categories.length !== 0
                     && props.queryCategorization.categories.map(category => {
                         return (
                             <h6 key={key++} className="categoryTag">{category.name}</h6>
                         );
                     })}
-                    {props.queryCategorization && props.queryCategorization.categories.length === 0
+                    {props.queryCategorization
+                    && (!props.queryCategorization.categories || props.queryCategorization.categories.length === 0)
                     && <h6 key={key++} className="uncategorizedTag">Uncategorized</h6>}
                 </Row>
             </Col>
             <Row>
                 <Col>
-                    <SparqlAceEditor code={props.queryCategorization && props.queryCategorization.queryDocument.code}/>
+                    <SparqlAceEditor readOnly={true}
+                                     code={props.queryCategorization.queryDocument ? props.queryCategorization.queryDocument.code : ""}/>
                 </Col>
                 <Col>
                     <Card className="queryCard">
                         <Card.Body>
-                            <Card.Title>{props.queryCategorization && props.queryCategorization.queryDocument.title}</Card.Title>
-                            <Card.Text>{props.queryCategorization && props.queryCategorization.queryDocument.description}</Card.Text>
+                            <Card.Title>{(props.queryCategorization.queryDocument
+                                && props.queryCategorization.queryDocument.title)
+                                ? props.queryCategorization.queryDocument.title
+                                : ""}</Card.Title>
+                            <Card.Text>{(props.queryCategorization.queryDocument
+                                && props.queryCategorization.queryDocument.description)
+                                ? props.queryCategorization.queryDocument.description
+                                : ""}</Card.Text>
                             <Button variant="success" onClick={() => {
                                 props.setQueryToRun(props.queryCategorization.queryDocument.code);
                                 setQueryRunner(!showQueryRunner);
@@ -79,10 +88,7 @@ export const Query = (props) => {
                        contentLabel="queryEditor"
                        onRequestClose={() => setQueryEditor(!showQueryEditor)}>
                     <QueryEditor queryCategorizationToEdit={queryCategorizationToEdit}
-                                 close={() => {
-                                     setQueryEditor(false);
-                                     props.fetchQueryDocuments(props.selectedCategorization.id, props.selectedCategories);
-                                 }}
+                                 close={() => setQueryEditor(false)}
                                  update={props.updateQueryCategorization}/>
                 </Modal>
             </Row>
@@ -91,7 +97,7 @@ export const Query = (props) => {
 
 const mapStateToProps = state => ({
     ...state.explorerReducer,
-    ...state.queriesReducer
+    ...state.queryListReducer
 });
 
 const mapDispatchToProps = dispatch => ({

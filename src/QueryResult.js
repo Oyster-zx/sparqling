@@ -28,7 +28,7 @@ export const QueryResult = (props) => {
                 <Button variant="danger" onClick={() => props.close()}> Close </Button>
             </Row>
             <Row>
-                {!props.queryResult && <Col style={{display: 'flex', justifyContent: 'center'}}>
+                {!props.queryResult && !props.queryFail && <Col style={{display: 'flex', justifyContent: 'center'}}>
                     <ClipLoader
                         sizeUnit={"px"}
                         size={150}
@@ -38,7 +38,11 @@ export const QueryResult = (props) => {
                 </Col>}
                 {props.queryResult &&
                 <Col>
-                    {props.queryResult && <MDBDataTable striped bordered hover data={props.queryResult}/>}
+                    <MDBDataTable striped bordered hover data={props.queryResult}/>
+                </Col>}
+                {props.queryFail &&
+                <Col>
+                    {props.queryFail}
                 </Col>}
             </Row>
         </Col>)

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import Query from "./Query";
 import {Button, Col, Row} from "react-bootstrap";
 import {MDBPageItem, MDBPageNav, MDBPagination} from "mdbreact";
@@ -6,22 +6,24 @@ import {connect} from "react-redux";
 import Modal from "react-modal";
 import QueryEditor from "./QueryEditor";
 import {createQueryCategorization} from "./actions/queryEditorAction";
-import {fetchQueryDocuments} from "./actions/queriesAction";
+import {fetchQueryDocuments} from "./actions/queryListAction";
 
 const customStyles = {
     overlay: {zIndex: 1000}
 };
 Modal.setAppElement('#root');
 
-export const Queries = (props) => {
-    const [showQueryCreator, setShowQueryCreator] = useState(false);
+export const QueryList = (props) => {
+    let numberOfQueriesPerPage = 5;
     let key = 0;
+    const [showQueryCreator, setShowQueryCreator] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
 
     return (
         <>
             {props.selectedCategorization &&
             <>
-                {props.queryCategorizations && props.queryCategorizations.length !== 0 &&
+                {props.queryCategorizations &&
                 <>
                     <Row>
                         <Col style={{display: 'flex', justifyContent: 'center'}}>
@@ -30,39 +32,50 @@ export const Queries = (props) => {
                             </Button>
                         </Col>
                     </Row>
-                    {props.queryCategorizations && props.queryCategorizations.map((queryCategorization) => {
+                    {props.queryCategorizations.slice((currentPage - 1) * numberOfQueriesPerPage, (currentPage - 1) * numberOfQueriesPerPage + numberOfQueriesPerPage).map((queryCategorization) => {
                         return (<Query key={key++} queryCategorization={queryCategorization}/>)
                     })}
                     <Row>
                         <hr/>
                     </Row>
-                    <Row>
+                    {props.queryCategorizations && props.queryCategorizations.length !== 0 && <Row>
                         <Col style={{display: 'flex', justifyContent: 'center'}}>
-                            <MDBPagination className="mb-5" size="lg">
-                                <MDBPageItem>
+                            <MDBPagination color="blue">
+                                <MDBPageItem onClick={() => {
+                                    if (currentPage !== 1) {
+                                        setCurrentPage(currentPage - 1)
+                                    }
+                                }}>
                                     <MDBPageNav aria-label="Previous">
-                                        <span aria-hidden="true">Previous</span>
+                                        <span aria-hidden="true">&laquo;</span>
                                     </MDBPageNav>
                                 </MDBPageItem>
-                                <MDBPageItem>
+                                {[...Array(props.queryCategorizations
+                                    ? Math.ceil(props.queryCategorizations.length / numberOfQueriesPerPage) : 1)]
+                                    .map((none, index) => {
+                                        return (
+                                            <MDBPageItem onClick={() => setCurrentPage(index + 1)}
+                                                         active={currentPage === index + 1}>
+                                                <MDBPageNav>
+                                                    {index + 1}
+                                                </MDBPageNav>
+                                            </MDBPageItem>
+                                        )
+                                    })}
+                                <MDBPageItem onClick={() => {
+                                    let numberOfPages = props.queryCategorizations
+                                        ? Math.ceil(props.queryCategorizations.length / numberOfQueriesPerPage) : 1;
+                                    if (currentPage !== numberOfPages) {
+                                        setCurrentPage(currentPage + 1)
+                                    }
+                                }}>
                                     <MDBPageNav>
-                                        1
-                                    </MDBPageNav>
-                                </MDBPageItem>
-                                <MDBPageItem>
-                                    <MDBPageNav>2</MDBPageNav>
-                                </MDBPageItem>
-                                <MDBPageItem>
-                                    <MDBPageNav>3</MDBPageNav>
-                                </MDBPageItem>
-                                <MDBPageItem>
-                                    <MDBPageNav aria-label="Previous">
-                                        <span aria-hidden="true">Next</span>
+                                        &raquo;
                                     </MDBPageNav>
                                 </MDBPageItem>
                             </MDBPagination>
                         </Col>
-                    </Row>
+                    </Row>}
                     <Row>
                         <Modal style={customStyles}
                                isOpen={showQueryCreator}
@@ -72,7 +85,6 @@ export const Queries = (props) => {
                                }}>
                             <QueryEditor close={() => {
                                 setShowQueryCreator(false);
-                                props.fetchQueryDocuments(props.selectedCategorization.id, props.selectedCategories);
                             }} create={props.createQueryCategorization}/>
                         </Modal>
                     </Row>
@@ -91,7 +103,7 @@ export const Queries = (props) => {
 
 const mapStateToProps = state => ({
     ...state.explorerReducer,
-    ...state.queriesReducer
+    ...state.queryListReducer
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -99,4 +111,4 @@ const mapDispatchToProps = dispatch => ({
     fetchQueryDocuments: (categorizationId, selectedCategories) => dispatch(fetchQueryDocuments(categorizationId, selectedCategories))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Queries);
+export default connect(mapStateToProps, mapDispatchToProps)(QueryList);

@@ -12,7 +12,7 @@ import "intelligent-tree-select/lib/styles.css"
 import ModifiedIntelligentTreeSelect from './ModifiedIntelligentTreeSelect'
 import {Autocomplete} from '@material-ui/lab';
 import {TextField} from "@material-ui/core";
-import {fetchQueryDocuments} from "./actions/queriesAction";
+import {fetchQueryDocuments} from "./actions/queryListAction";
 import AceEditor from "react-ace";
 
 export const Explorer = (props) => {
@@ -37,6 +37,7 @@ export const Explorer = (props) => {
                     props.selectCategorization(selectedCategorization);
                     if (selectedCategorization) {
                         props.fetchCategories(selectedCategorization.categorizationScheme.id);
+                        props.selectCategories(selectedCategorization.id, []);
                     } else {
                         props.cleanStore();
                         props.fetchCategorizations();
@@ -60,7 +61,6 @@ export const Explorer = (props) => {
                         props.selectCategories(props.selectedCategorization.id, categories);
                     }}
                     valueArray={props.selectedCategories}
-                    onOptionCreate={(newOption) => console.log(newOption)}
                 />
             </>}
         </>)
@@ -77,7 +77,10 @@ const mapDispatchToProps = dispatch => ({
     selectCategorization: (selectedCategorization) => dispatch(selectCategorization(selectedCategorization)),
     selectCategories: (categorizationId, selectedCategories) => {
         dispatch(selectCategories(selectedCategories));
+        var a = performance.now();
         dispatch(fetchQueryDocuments(categorizationId, selectedCategories));
+        var b = performance.now();
+        console.log('It took ' + (b - a) + ' ms.');
     }
 });
 

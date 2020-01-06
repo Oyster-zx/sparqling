@@ -24,5 +24,5 @@ export const runQuery = (endpoint, query) => dispatch => {
             data: json
         }))
         .catch(err => dispatch(
-            {type: "ERROR", msg: "Unable to fetch data", e: err}))
+            {type: "SET_QUERY_FAIL", error: err.toString()}))
 };

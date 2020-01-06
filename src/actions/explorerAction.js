@@ -1,20 +1,7 @@
-export const expand = (expanded) => dispatch => {
-    dispatch({
-        type: 'EXPAND',
-        expanded: expanded
-    })
-};
-
-export const check = (checked) => dispatch => {
-    dispatch({
-        type: 'CHECK',
-        checked: checked
-    })
-};
+import Constants from "../Constants";
 
 export const fetchCategories = (categorizationSchemaId) => dispatch => {
-    console.log(`GET http://localhost:8080/api/v1/categories?categorizationSchemaId=${categorizationSchemaId}`)
-    return fetch(`http://localhost:8080/api/v1/categories?categorizationSchemaId=${categorizationSchemaId}`)
+    return fetch(`${Constants.REST_API}/categories?categorizationSchemaId=${categorizationSchemaId}`)
         .then(response => response.json())
         .then(json => dispatch(
             {type: "FETCH_CATEGORIES", data: json}))
@@ -22,7 +9,7 @@ export const fetchCategories = (categorizationSchemaId) => dispatch => {
             {type: "ERROR", msg: "Unable to fetch data", e: err}))
 };
 export const fetchCategorizations = () => dispatch => {
-    return fetch('http://localhost:8080/api/v1/categorizations')
+    return fetch(`${Constants.REST_API}/categorizations`)
         .then(response => response.json())
         .then(json => dispatch(
             {type: "FETCH_CATEGORIZATIONS", data: json}))
